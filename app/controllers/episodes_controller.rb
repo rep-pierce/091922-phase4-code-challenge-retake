@@ -7,7 +7,7 @@ rescue_from ActiveRecord::RecordNotFound, with: :record_not_found_response
 
     def show
         episode = find_episode
-        render json: episode, include: :guests
+        render json: episode, include: :guests          
     end
 
     def destroy
@@ -18,7 +18,7 @@ rescue_from ActiveRecord::RecordNotFound, with: :record_not_found_response
 
     private
     def episode_params
-        params.permit(:id, :name, :number, :guests)
+        params.permit(:id, :date, :number, :guests)
     end
 
     def find_episode
@@ -26,6 +26,6 @@ rescue_from ActiveRecord::RecordNotFound, with: :record_not_found_response
     end
 
     def record_not_found_response(exception)
-        render json: {"error": "Episode not found"}
+        render json: {"error": "Episode not found"}, status: :not_found
     end
 end
